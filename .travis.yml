@@ -9,11 +9,10 @@ env:
 
 before_script:
   - env | sort
-  - image="torchbox/php:${VERSION}${VARIANT:+-$VARIANT}"
-  - image="${image//'/'/-}"
+  - tag="torchbox/php:${VERSION}${VARIANT:+-$VARIANT}"
 
 script:
-  - docker build --no-cache --rm -t "$image" -f "Dockerfile.${VERSION}${VARIANT:+-$VARIANT}" ."
+  - docker build --no-cache --rm -t "$tag" -f "Dockerfile.$tag" .
 
 after_script:
   - docker images

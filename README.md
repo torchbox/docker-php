@@ -2,4 +2,4 @@
 
 # torchbox/php
 
-Torchbox Docker PHP FPM Images based on official PHP
+Docker PHP-FPM images made by Torchbox based on official PHP images.

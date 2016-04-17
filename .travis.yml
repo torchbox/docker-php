@@ -1,18 +1,14 @@
 language: bash
 services: docker
 
-env:
-  - VERSION=5.4 VARIANT=fpm
-  - VERSION=5.5 VARIANT=fpm
-  - VERSION=5.6 VARIANT=fpm
-  - VERSION=7 VARIANT=fpm
+matrix:
+  include:
+    - env: VERSION=5.4 VARIANT=fpm
+    - env: VERSION=5.5 VARIANT=fpm
+    - env: VERSION=5.6 VARIANT=fpm
+    - env: VERSION=7 VARIANT=fpm
 
-before_script:
-  - env | sort
-  - tag="torchbox/php:${VERSION}${VARIANT:+-$VARIANT}"
-
-script:
-  - docker build --no-cache --rm -t "$tag" -f "Dockerfile.${VERSION}${VARIANT:+-$VARIANT}" .
+script: - docker build -t "torchbox/php:${VERSION}-${VARIANT}" -f "Dockerfile.${VERSION}-${VARIANT}" .
 
 after_script:
   - docker images

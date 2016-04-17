@@ -12,7 +12,7 @@ before_script:
   - tag="torchbox/php:${VERSION}${VARIANT:+-$VARIANT}"
 
 script:
-  - docker build --no-cache --rm -t "$tag" -f "Dockerfile.$tag" .
+  - docker build --no-cache --rm -t "$tag" -f "Dockerfile.${VERSION}${VARIANT:+-$VARIANT}" .
 
 after_script:
   - docker images

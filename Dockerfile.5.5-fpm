@@ -31,13 +31,17 @@ RUN ln -fs /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/
 RUN echo "Installing PHP extensions" \
     && docker-php-ext-install iconv mcrypt gd pdo_mysql pdo_pgsql pcntl zip bcmath simplexml xmlrpc soap pspell ldap mbstring \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-enable iconv mcrypt gd pdo_mysql pdo_pgsql pcntl zip bcmath simplexml xmlrpc soap pspell ldap mbstring
-
-# Install php-memcached
-RUN git clone https://github.com/php-memcached-dev/php-memcached.git /usr/src/php/ext/memcached \
+    && docker-php-ext-enable iconv mcrypt gd pdo_mysql pdo_pgsql pcntl zip bcmath simplexml xmlrpc soap pspell ldap mbstring \
+    && git clone https://github.com/php-memcached-dev/php-memcached.git /usr/src/php/ext/memcached \
     && cd /usr/src/php/ext/memcached \
     && docker-php-ext-configure memcached \
-    && docker-php-ext-install memcached
+    && docker-php-ext-install memcached \
+    && apt-get autoremove -y \
+    && apt-get clean all \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /usr/share/doc /usr/share/man /usr/share/locale \
+    && rm -f /usr/local/etc/php-fpm.d/* \
+    && rm -rf /usr/src/php
 
 # install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --filename=composer --install-dir=/bin

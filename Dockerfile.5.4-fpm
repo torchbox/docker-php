@@ -37,11 +37,12 @@ RUN echo "Installing PHP extensions" \
     && docker-php-ext-configure memcached \
     && docker-php-ext-install memcached \
     && apt-get autoremove -y \
+    && dpkg -la | awk '{print $2}' | grep '\-dev' | xargs apt-get remove -y \
     && apt-get clean all \
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /usr/share/doc /usr/share/man /usr/share/locale \
-    && rm -f /usr/local/etc/php-fpm.d/* \
-    && rm -rf /usr/src/php
+    && rm -rvf /var/lib/apt/lists/* \
+    && rm -rvf /usr/share/doc /usr/share/man /usr/share/locale \
+    && rm -fv /usr/local/etc/php-fpm.d/*.conf \
+    && rm -rvf /usr/src/php
 
 # install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --filename=composer --install-dir=/bin

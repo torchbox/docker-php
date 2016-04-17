@@ -9,7 +9,6 @@ env:
 
 before_script:
   - env | sort
-  - cd "$VERSION"
   - image="torchbox/php:${VERSION}${VARIANT:+-$VARIANT}"
   - image="${image//'/'/-}"
 

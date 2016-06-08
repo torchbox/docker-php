@@ -2,7 +2,6 @@ pipeline:
   build:
     image: debian:jessie
     commands:
-      - lsb_release -a
       - uname -a
-
-
+      - ls
+      - date
